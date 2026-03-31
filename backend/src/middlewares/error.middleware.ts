@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/app-error";
 import { env } from "../config/env";
 import { ZodError } from "zod";
+import { sendError } from "../utils/api-response";
 
 export function errorMiddleware(err: Error, _req: Request, res: Response, _next: NextFunction) {
   if (err instanceof ZodError) {
-    return res.status(400).json({
-      status: "error",
+    return sendError(res, {
+      statusCode: 400,
       message: "Validation failed",
       errors: err.issues.map((issue) => ({
         path: issue.path.join("."),
@@ -25,10 +26,10 @@ export function errorMiddleware(err: Error, _req: Request, res: Response, _next:
     console.error(err);
   }
 
-  res.status(statusCode).json({
-    status: "error",
+  return sendError(res, {
+    statusCode,
     message,
-    ...(err instanceof AppError && err.details ? { errors: err.details } : {}),
-    ...(env.NODE_ENV === "development" ? { stack: err.stack } : {}),
+    errors: err instanceof AppError ? err.details : undefined,
+    stack: env.NODE_ENV === "development" ? err.stack : undefined,
   });
 }

@@ -1,22 +1,24 @@
 import { Request, Response } from "express";
 import { loginUser, registerUser } from "../services/auth.service";
 import { AppError } from "../utils/app-error";
+import { sendSuccess } from "../utils/api-response";
 
 export async function registerController(req: Request, res: Response) {
   const result = await registerUser(req.body);
 
-  res.status(201).json({
+  return sendSuccess(res, {
+    statusCode: 201,
     message: "User registered successfully",
-    ...result,
+    data: result,
   });
 }
 
 export async function loginController(req: Request, res: Response) {
   const result = await loginUser(req.body);
 
-  res.status(200).json({
+  return sendSuccess(res, {
     message: "Login successful",
-    ...result,
+    data: result,
   });
 }
 
@@ -25,7 +27,9 @@ export async function getCurrentUserController(req: Request, res: Response) {
     throw new AppError("Authenticated user was not attached to request", 500);
   }
 
-  res.status(200).json({
-    user: req.user,
+  return sendSuccess(res, {
+    data: {
+      user: req.user,
+    },
   });
 }

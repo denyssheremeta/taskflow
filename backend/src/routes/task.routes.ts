@@ -13,22 +13,23 @@ import {
   taskIdParamsSchema,
   updateTaskSchema,
 } from "../schemas/task.schema";
+import { asyncHandler } from "../utils/async-handler";
 
 const taskRouter = Router();
 
 taskRouter.use(requireAuth);
 
-taskRouter.get("/", getMyTasksController);
-taskRouter.get("/:id", validate({ params: taskIdParamsSchema }), getTaskByIdController);
-taskRouter.post("/", validate({ body: createTaskSchema }), createTaskController);
+taskRouter.get("/", asyncHandler(getMyTasksController));
+taskRouter.get("/:id", validate({ params: taskIdParamsSchema }), asyncHandler(getTaskByIdController));
+taskRouter.post("/", validate({ body: createTaskSchema }), asyncHandler(createTaskController));
 taskRouter.patch(
   "/:id",
   validate({
     params: taskIdParamsSchema,
     body: updateTaskSchema,
   }),
-  updateTaskController,
+  asyncHandler(updateTaskController),
 );
-taskRouter.delete("/:id", validate({ params: taskIdParamsSchema }), deleteTaskController);
+taskRouter.delete("/:id", validate({ params: taskIdParamsSchema }), asyncHandler(deleteTaskController));
 
 export default taskRouter;

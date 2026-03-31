@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { createTask, deleteTask, getMyTasks, getTaskById, updateTask } from "../services/task.service";
 import { AppError } from "../utils/app-error";
+import { sendSuccess } from "../utils/api-response";
 
 function getAuthenticatedUserId(req: Request) {
   if (!req.user) {
@@ -17,34 +18,43 @@ function getTaskIdFromParams(req: Request) {
 export async function getMyTasksController(req: Request, res: Response) {
   const tasks = await getMyTasks(getAuthenticatedUserId(req));
 
-  res.status(200).json({
-    tasks,
+  return sendSuccess(res, {
+    data: {
+      tasks,
+    },
   });
 }
 
 export async function getTaskByIdController(req: Request, res: Response) {
   const task = await getTaskById(getTaskIdFromParams(req), getAuthenticatedUserId(req));
 
-  res.status(200).json({
-    task,
+  return sendSuccess(res, {
+    data: {
+      task,
+    },
   });
 }
 
 export async function createTaskController(req: Request, res: Response) {
   const task = await createTask(getAuthenticatedUserId(req), req.body);
 
-  res.status(201).json({
+  return sendSuccess(res, {
+    statusCode: 201,
     message: "Task created successfully",
-    task,
+    data: {
+      task,
+    },
   });
 }
 
 export async function updateTaskController(req: Request, res: Response) {
   const task = await updateTask(getTaskIdFromParams(req), getAuthenticatedUserId(req), req.body);
 
-  res.status(200).json({
+  return sendSuccess(res, {
     message: "Task updated successfully",
-    task,
+    data: {
+      task,
+    },
   });
 }
 
