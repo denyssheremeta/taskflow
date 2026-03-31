@@ -120,14 +120,32 @@ code {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid #ccd5e3;
+  border-radius: 0.9rem;
+  background: #fbfcfe;
+  padding: 0.9rem 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .field input:focus {
   outline: none;
   border-color: #1459c7;
   box-shadow: 0 0 0 4px rgba(20, 89, 199, 0.12);
 }
 
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #1459c7;
+  box-shadow: 0 0 0 4px rgba(20, 89, 199, 0.12);
+}
+
 .button-primary,
-.button-secondary {
+.button-secondary,
+.button-danger {
   border: 0;
   border-radius: 999px;
   padding: 0.9rem 1.25rem;
@@ -149,9 +167,23 @@ code {
   color: #17325d;
 }
 
+.button-danger {
+  background: #feeceb;
+  color: #b42318;
+}
+
 .auth-footer,
 .form-error {
   margin: 0;
+}
+
+.notice-success {
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid #b6e3c2;
+  background: #edf9f0;
+  color: #17663a;
+  font-weight: 600;
 }
 
 .form-error,
@@ -160,6 +192,13 @@ code {
 }
 
 .tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -190,6 +229,28 @@ code {
   gap: 0.85rem;
 }
 
+.task-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.task-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field-span-full {
+  grid-column: 1 / -1;
+}
+
+.task-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .task-card-top,
 .task-meta {
   display: flex;
@@ -202,6 +263,34 @@ code {
   color: #60708d;
   font-size: 0.92rem;
   flex-wrap: wrap;
+}
+
+.task-description {
+  margin-top: 0.35rem;
+}
+
+.task-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.field-inline {
+  min-width: 220px;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.task-editor {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e6ecf5;
 }
 
 .status-badge {
@@ -228,9 +317,15 @@ code {
   }
 
   .tasks-header,
+  .section-header,
+  .task-controls,
   .task-card-top,
   .task-meta {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .task-form-grid {
+    grid-template-columns: 1fr;
   }
 }

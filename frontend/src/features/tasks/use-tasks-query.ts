@@ -4,7 +4,7 @@ import { taskKeys } from "./task.keys";
 
 export function useTasksQuery() {
   return useQuery({
-    queryKey: taskKeys.all,
+    queryKey: taskKeys.lists(),
     queryFn: async () => {
       const response = await getTasksRequest();
       return response.data.tasks;
