@@ -10,6 +10,11 @@ Users can:
 
 The project is intentionally simple in scope, but structured to demonstrate backend fundamentals, API design, authentication, database ownership rules, and frontend integration.
 
+## Live Demo
+
+- Frontend: https://taskflow-nu-tan.vercel.app/
+- Backend API: https://taskflow-uzrw.onrender.com/
+
 ## Tech Stack
 
 ### Backend
@@ -217,4 +222,3 @@ This project demonstrates:
 - improve form UX and inline notifications
 - add deployment links
 - switch to cookie-based auth for stronger production security
-
